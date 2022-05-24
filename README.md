@@ -6,6 +6,8 @@ The backend server uses the Abc framework via Deno and the PostgreSQL driver was
 
 ## Software installation
 
+~ I think this can be added to later on, I'm happy to do that :) ~
+
 ```
 brew install deno
 
