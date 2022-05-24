@@ -6,7 +6,7 @@ The backend server uses the Abc framework via Deno and the PostgreSQL driver was
 
 ## Database source
 
-The initial database was taken from the [World Bank] website (https://www.kaggle.com/datasets/kaggle/world-development-indicators).
+The initial database was taken from the [World Bank](https://www.kaggle.com/datasets/kaggle/world-development-indicators) website.
 
 ## Software installation
 
