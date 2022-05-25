@@ -9,6 +9,8 @@ const client = new Client(
 );
 await client.connect();
 
+// const clientCountry = new Client(WORLDBANKSTUFF)
+
 // BELOW IS EXAMPLE OF INSERT QUERY
 
 // await client.queryArray(
@@ -22,3 +24,31 @@ let boop = await client.queryObject(`SELECT * FROM users`);
 console.log(boop.rows);
 
 const app = new Application();
+
+app
+  .use(
+    abcCors({
+      allowedHeaders: [
+        "Authorization",
+        "Content-Type",
+        "Accept",
+        "Origin",
+        "User-Agent",
+      ],
+      credentials: true,
+    })
+  )
+  .get("/login", async (server) => {
+    await getUserLogin(server);
+    await createSession(server);
+  })
+  .post("/register", async (server) => {
+    await registerNewUser(server);
+  })
+  .get("/search", async (server) => {
+    await getSearchResults(server);
+    await postSearchHistory(server);
+  })
+  .get("/history", async (server) => {
+    await getUserHistory(server);
+  });
