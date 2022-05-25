@@ -4,24 +4,27 @@ import { abcCors } from "https://deno.land/x/cors/mod.ts";
 
 // url below is database being hosted on elephantSQL
 
-const client = new Client(
+const clientUser = new Client(
   `postgres://xtvjajky:1I2LmKlHwfx8RgKOYf6N-81Gg4eRUH_J@tyke.db.elephantsql.com/xtvjajky`
 );
-await client.connect();
+await clientUser.connect();
 
-// const clientCountry = new Client(WORLDBANKSTUFF)
+const clientCountry = new Client(
+  "postgres://czreijar:TJ2StTuQIl2CoRoinQTwPxk8pBGfdf6t@kandula.db.elephantsql.com/czreijar"
+);
+await clientCountry.connect();
 
 // BELOW IS EXAMPLE OF INSERT QUERY
 
-// await client.queryArray(
+// await clientUser.queryArray(
 //   `INSERT INTO users (username, password, created_at) VALUES ('test', 'password', NOW());`
 // );
 
 // EXAMPLE BELOW OF HOW TO QUERY DATABASE TO SHOW WHATS IN USER TABLE AND CONSOLE LOG IT
 
-let boop = await client.queryObject(`SELECT * FROM users`);
+// let boop = await clientUser.queryObject(`SELECT * FROM users`);
 
-console.log(boop.rows);
+// console.log(boop.rows);
 
 const app = new Application();
 
