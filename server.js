@@ -58,6 +58,8 @@ app
   })
   .get("/search", async (server) => {
     await getSearchResults(server);
+  })
+  .post("/search", async (server) => {
     await postSearchHistory(server);
   })
   .get("/history", async (server) => {
