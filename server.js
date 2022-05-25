@@ -22,9 +22,19 @@ await clientCountry.connect();
 
 // EXAMPLE BELOW OF HOW TO QUERY DATABASE TO SHOW WHATS IN USER TABLE AND CONSOLE LOG IT
 
-// let boop = await clientUser.queryObject(`SELECT * FROM users`);
+// await clientUser.queryArray(
+//   `INSERT INTO users (username, password, created_at) VALUES ('test2', 'password2', NOW());`
+// );
 
+let boop = await clientUser.queryObject(`SELECT * FROM users`);
+
+// console.log(boop);
 // console.log(boop.rows);
+
+let bloop = await clientUser.queryArray(`SELECT * FROM users`);
+
+console.log(bloop);
+console.log(bloop.rows);
 
 const app = new Application();
 
