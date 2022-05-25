@@ -27,6 +27,13 @@ await clientCountry.connect();
 // console.log(boop);
 // console.log(boop.rows);
 
+// await clientUser.queryArray(
+//   `INSERT INTO search_history (user_id, countries, indicators, year_range, created_at) VALUES ('1', 'france', 'number of croissants', '1990-1999', NOW());`
+// );
+
+// let searchBloop = await clientUser.queryObject("SELECT * FROM search_history");
+// console.log(searchBloop.rows);
+
 const app = new Application();
 
 app
@@ -51,6 +58,8 @@ app
   })
   .get("/search", async (server) => {
     await getSearchResults(server);
+  })
+  .post("/search", async (server) => {
     await postSearchHistory(server);
   })
   .get("/history", async (server) => {
