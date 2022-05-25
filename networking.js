@@ -1,14 +1,14 @@
 export default async function postSearchHistory(server) {
-  const { userID, countries, indicators, yearRange } = await server.body;
+  const { userID, country, indicator, yearRange } = await server.body;
 
-  if (countries && indicators && yearRange){
+  if (country && indicator && yearRange){
     await clientUser.queryObject(
-    `INSERT INTO search_history (user_id, countries, year_range, indicators,created_at) VALUES (${userID}, ${countries}, ${yearRange}, ${indicators},NOW());`,
+    `INSERT INTO search_history (user_id, countries, year_range, indicators,created_at) VALUES (${userID}, ${country}, ${yearRange}, ${indicator},NOW());`,
   );
   return server.json({response: "Added to database"},200)
   } else if(countries && yearRange){
         await clientUser.queryObject(
-    `INSERT INTO search_history (user_id, countries, year_range,created_at) VALUES (${userID}, ${countries}, ${yearRange}, NOW());`
+    `INSERT INTO search_history (user_id, countries, year_range,created_at) VALUES (${userID}, ${country}, ${yearRange}, NOW());`
   );
   return server.json({response: "Added to database"},200)
   } else{
@@ -17,11 +17,11 @@ export default async function postSearchHistory(server) {
 }
 
 export default async function getSearchResults(server){
-    const {countries, indicators, yearRange} = await server.body
+    const {country, indicator, yearStart, yearEnd} = await server.body
 
     const searchResponse = await clientUser.queryObject(`SELECT ShortName, IndicatorName, Value, Year, FROM Country 
     JOIN Indicators ON Indicators.CountryCode = Country.CountryCode
-    WHERE ShortName = ${countries} && IndicatorName = ${indicators} && Year <= ${yearRange[0]} && Year >= ${yearRange[1]}`)
+    WHERE ShortName = ${country} && IndicatorName = ${indicator} && Year <= ${yearStart} && Year >= ${yearEnd}`)
 
     const searchResult = searchResponse.rows
     server.json(searchResult)
