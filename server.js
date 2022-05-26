@@ -7,7 +7,7 @@ import { config } from "https://deno.land/x/dotenv/mod.ts";
 const DENO_ENV = Deno.env.get("DENO_ENV") ?? "development";
 config({ path: `./.env.${DENO_ENV}`, export: true });
 
-const clientUser = new Client(`Deno.env.get("PG_URL")`);
+const clientUser = new Client(Deno.env.get("PG_URL"));
 await clientUser.connect();
 
 const clientCountry = new Client(
