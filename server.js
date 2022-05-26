@@ -60,7 +60,7 @@ async function displayTest(server) {
     1999
   );
   await server.json(testInfo);
-  return server.json({ response: "test working!" }, 200);
+  // return server.json({ response: "test working!" }, 200);
 }
 
 async function getUserLogin(server) {
