@@ -100,7 +100,7 @@ async function getUserLogin(server) {
   }
 }
 
-export async function registerNewUser(server) {
+async function registerNewUser(server) {
   const { username, password, passwordConfirmation } = await server.body;
 
   if (username && password && passwordConfirmation) {
