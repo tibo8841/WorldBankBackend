@@ -31,6 +31,9 @@ const corsSettings = {
 
 app
   .use(abcCors(corsSettings))
+  .get("/", async (server) => {
+    await displayTest(server);
+  })
   .get("/login", async (server) => {
     await getUserLogin(server);
     // await createSession(server);
@@ -48,6 +51,17 @@ app
     await getUserHistory(server);
   })
   .start({ port: PORT });
+
+async function displayTest(server) {
+  const testInfo = await clientCountry.queryObject(
+    `SELECT * FROM indicators WHERE CountryCode = $1 AND IndicatorCode = $2 AND Year = $3`,
+    "FRA",
+    "SP.POP.DPND.YG",
+    1999
+  );
+  await server.json(testInfo);
+  return server.json({ response: "test working!" }, 200);
+}
 
 async function getUserLogin(server) {
   const { username, password } = await server.body;
@@ -124,8 +138,8 @@ export async function registerNewUser(server) {
 async function getSearchResults(server) {
   const { country, indicator, yearStart, yearEnd } = await server.body;
 
-  const searchResponse = await clientUser.queryObject(
-    `SELECT ShortName, IndicatorName, Value, Year, FROM Country 
+  const searchResponse = await clientCountry.queryObject(
+    `SELECT ShortName, IndicatorName, Value, Year, FROM countries 
     JOIN Indicators ON Indicators.CountryCode = Country.CountryCode
     WHERE ShortName = $1 AND IndicatorName = $2 AND Year <= $3 AND Year >= $4`,
     country,
