@@ -137,9 +137,9 @@ async function getSearchResults(server) {
   const { country, indicator, yearStart, yearEnd } = await server.queryParams;
 
   const searchResponse = await clientCountry.queryObject(
-    `SELECT ShortName, IndicatorName, Value, Year, FROM countries 
-    JOIN Indicators ON Indicators.CountryCode = Countries.CountryCode
-    WHERE ShortName = $1 AND IndicatorName = $2 AND Year <= $3 AND Year >= $4`,
+    `SELECT countries.ShortName, indicators.IndicatorName, indicators.Value, indicators.Year, FROM countries 
+    JOIN Indicators ON indicators.CountryCode = countries.CountryCode
+    WHERE countries.ShortName = $1 AND indicators.IndicatorName = $2 AND indicators.Year <= $3 AND indicators.Year >= $4`,
     country,
     indicator,
     yearStart,
