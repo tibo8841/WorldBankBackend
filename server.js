@@ -54,9 +54,10 @@ app
 
 async function displayTest(server) {
   const testInfo = await clientCountry.queryObject(
-    `SELECT * FROM indicators WHERE CountryCode = $1 AND IndicatorCode = $2 AND Year = $3`,
+    `SELECT * FROM indicators WHERE CountryCode = $1 AND IndicatorCode = $2 AND Year <= $3 AND Year >= $4`,
     "FRA",
     "SP.POP.DPND.YG",
+    1990,
     1999
   );
   await server.json(testInfo);
