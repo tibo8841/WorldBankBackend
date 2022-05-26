@@ -134,7 +134,7 @@ export async function registerNewUser(server) {
 }
 
 async function getSearchResults(server) {
-  const { country, indicator, yearStart, yearEnd } = await server.body;
+  const { country, indicator, yearStart, yearEnd } = await server.queryParams;
 
   const searchResponse = await clientCountry.queryObject(
     `SELECT ShortName, IndicatorName, Value, Year, FROM countries 
