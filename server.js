@@ -54,7 +54,7 @@ app
 
 async function displayTest(server) {
   const testInfo = await clientCountry.queryObject(
-    `SELECT * FROM indicators WHERE CountryCode = $1 AND IndicatorCode = $2 AND Year <= $3 AND Year >= $4`,
+    `SELECT * FROM indicators WHERE CountryCode = $1 AND IndicatorCode = $2 AND Year >= $3 AND Year <= $4`,
     "FRA",
     "SP.POP.DPND.YG",
     1990,
@@ -138,7 +138,7 @@ async function getSearchResults(server) {
   const { country, indicator, yearStart, yearEnd } = await server.queryParams;
 
   const searchResponse = await clientCountry.queryObject(
-    `SELECT CountryCode, IndicatorName, Value, Year FROM indicators WHERE CountryCode = $1 AND IndicatorName = $2 AND Year <= $3 AND Year >= $4`,
+    `SELECT CountryCode, IndicatorName, Value, Year FROM indicators WHERE CountryCode = $1 AND IndicatorName = $2 AND Year >= $3 AND Year <= $4`,
     country,
     indicator,
     yearStart,
