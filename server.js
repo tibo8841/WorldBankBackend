@@ -147,7 +147,6 @@ async function getSearchResults(server) {
 
   const searchResult = searchResponse.rows;
   await server.json(searchResult);
-  return server.json({ response: "Search Complete" }, 200);
 }
 
 async function postSearchHistory(server) {
@@ -183,7 +182,6 @@ async function getUserHistory(server) {
   );
   if (historyResult) {
     await server.json(historyResult);
-    return server.json({ response: "Here is search history" }, 200);
   } else {
     return server.json({ error: "ERROR" });
   }
