@@ -100,8 +100,6 @@ async function getUserLogin(server) {
   }
 }
 
-import * as bcrypt from "https://deno.land/x/bcrypt@v0.2.4/mod.ts";
-
 export async function registerNewUser(server) {
   const { username, password, passwordConfirmation } = await server.body;
 
