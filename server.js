@@ -145,8 +145,7 @@ async function getSearchResults(server) {
     yearEnd
   );
 
-  const searchResult = searchResponse.rows;
-  await server.json(searchResult);
+  await server.json(searchResponse);
 }
 
 async function postSearchHistory(server) {
