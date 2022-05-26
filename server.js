@@ -137,7 +137,7 @@ async function getSearchResults(server) {
   const { country, indicator, yearStart, yearEnd } = await server.queryParams;
 
   const searchResponse = await clientCountry.queryObject(
-    `SELECT CountryCode, IndicatorName, Value, Year, FROM indicators WHERE CountryCode = $1 AND IndicatorName = $2 AND Year <= $3 AND Year >= $4`,
+    `SELECT CountryCode, IndicatorName, Value, Year FROM indicators WHERE CountryCode = $1 AND IndicatorName = $2 AND Year <= $3 AND Year >= $4`,
     country,
     indicator,
     yearStart,
@@ -163,7 +163,7 @@ async function postSearchHistory(server) {
     return server.json({ response: "Added to database" }, 200);
   } else if (countries && yearRange) {
     await clientUser.queryObject(
-      `INSERT INTO search_history (user_id, countries, year_range,created_at) VALUES ($1, $2, $3, NOW());`,
+      `INSERT INTO search_history (user_id, countries, year_range, created_at) VALUES ($1, $2, $3, NOW());`,
       userID,
       country,
       yearRange
