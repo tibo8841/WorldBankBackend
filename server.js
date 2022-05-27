@@ -90,7 +90,11 @@ export async function getUserLogin(server) {
     );
 
     if (comparison === true) {
-      await server.json({ loggedIn: true });
+      const userID = await clientUser.queryObject(
+        `SELECT id FROM users WHERE username =$1`,
+        username
+      );
+      await server.json(userID);
       // return server.json({ response: "Success, you are now logged in" }, 200);
     } else {
       await server.json({ loggedIn: false });
@@ -111,12 +115,17 @@ export async function getUserLogin(server) {
 }
 
 async function createSession(server) {
+  const { userID } = await server.body;
   const sessionId = v4.generate();
   await clientUser.queryObject(
     "INSERT INTO sessions (uuid, user_id, created_at) VALUES (?, ?, datetime('now'))",
     sessionId,
-    user.id
+    userID
   );
+  server.setCookie({
+    name: "sessionId",
+    value: sessionId,
+  });
 }
 
 async function registerNewUser(server) {
