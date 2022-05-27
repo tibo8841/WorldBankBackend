@@ -44,6 +44,9 @@ app
   .get("/search", async (server) => {
     await getSearchResults(server);
   })
+  .get("/search/indicators", async (server) => {
+    await getIndicators(server);
+  })
   .post("/search", async (server) => {
     await postSearchHistory(server);
   })
@@ -63,8 +66,6 @@ async function displayTest(server) {
   await server.json(testInfo);
   // return server.json({ response: "test working!" }, 200);
 }
-
-import * as bcrypt from "https://deno.land/x/bcrypt@v0.2.4/mod.ts";
 
 export async function getUserLogin(server) {
   const { username, password } = await server.body;
@@ -155,6 +156,13 @@ async function getSearchResults(server) {
   );
 
   await server.json(searchResponse);
+}
+
+async function getIndicators(server) {
+  const indicators = await clientCountry.queryObject(
+    "SELECT DISTINCT IndicatorName FROM indicators"
+  );
+  await server.json(indicators);
 }
 
 async function postSearchHistory(server) {
