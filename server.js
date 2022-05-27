@@ -64,7 +64,9 @@ async function displayTest(server) {
   // return server.json({ response: "test working!" }, 200);
 }
 
-async function getUserLogin(server) {
+import * as bcrypt from "https://deno.land/x/bcrypt@v0.2.4/mod.ts";
+
+export async function getUserLogin(server) {
   const { username, password } = await server.body;
 
   const query = await clientUser.queryObject(
@@ -84,14 +86,17 @@ async function getUserLogin(server) {
     );
 
     if (comparison === true) {
+      await server.json({ loggedIn: true });
       return server.json({ response: "Success, you are now logged in" }, 200);
     } else {
+      await server.json({ loggedIn: false });
       return server.json(
         { error: "Incorrect password, please try again!" },
         400
       );
     }
   } else {
+    await server.json({ loggedIn: false });
     return server.json(
       {
         err: "An account with that username does not exist, please sign up",
@@ -114,6 +119,7 @@ async function registerNewUser(server) {
           username,
           encryptedPassword
         );
+
         return server.json({ response: "New account created!" }, 200);
       } catch (err) {
         return server.json(
