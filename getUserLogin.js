@@ -20,14 +20,17 @@ export async function getUserLogin(server) {
     );
 
     if (comparison === true) {
+      await server.json({ isLoggedIn: true });
       return server.json({ response: "Success, you are now logged in" }, 200);
     } else {
+      await server.json({ isLoggedIn: false });
       return server.json(
         { error: "Incorrect password, please try again!" },
         400
       );
     }
   } else {
+    await server.json({ isLoggedIn: false });
     return server.json(
       {
         err: "An account with that username does not exist, please sign up",
