@@ -35,7 +35,7 @@ app
   .get("/", async (server) => {
     await displayTest(server);
   })
-  .get("/login:username:password", async (server) => {
+  .get("/login", async (server) => {
     await getUserLogin(server);
   })
   .post("/sessions", async (server) => {
@@ -71,7 +71,7 @@ async function displayTest(server) {
 }
 
 export async function getUserLogin(server) {
-  const { username, password } = await server.params;
+  const { username, password } = await server.queryParams;
 
   const query = await clientUser.queryObject(
     `SELECT * FROM users WHERE username = $1;`,
