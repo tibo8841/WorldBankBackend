@@ -119,9 +119,10 @@ async function registerNewUser(server) {
           username,
           encryptedPassword
         );
-
+        await server.json({ accountCreated: true });
         return server.json({ response: "New account created!" }, 200);
       } catch (err) {
+        await server.json({ accountCreated: false });
         return server.json(
           {
             err: "An account already exists for this username",
@@ -130,12 +131,14 @@ async function registerNewUser(server) {
         );
       }
     } else {
+      await server.json({ accountCreated: false });
       return server.json(
         { error: "Passwords do not match, please try again" },
         400
       );
     }
   } else {
+    await server.json({ accountCreated: false });
     server.json({ error: "Please provide all data" }, 400);
   }
 }
