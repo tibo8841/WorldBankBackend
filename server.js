@@ -38,9 +38,6 @@ app
   .get("/login", async (server) => {
     await getUserLogin(server);
   })
-  .post("/sessions", async (server) => {
-    await createSession(server);
-  })
   .post("/register", async (server) => {
     await registerNewUser(server);
   })
@@ -112,20 +109,6 @@ export async function getUserLogin(server) {
     //   400
     // );
   }
-}
-
-async function createSession(server) {
-  const { userID } = await server.body;
-  const sessionId = v4.generate();
-  await clientUser.queryObject(
-    "INSERT INTO sessions (uuid, user_id, created_at) VALUES (?, ?, datetime('now'))",
-    sessionId,
-    userID
-  );
-  server.setCookie({
-    name: "sessionId",
-    value: sessionId,
-  });
 }
 
 async function registerNewUser(server) {
