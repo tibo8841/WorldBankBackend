@@ -91,22 +91,22 @@ export async function getUserLogin(server) {
 
     if (comparison === true) {
       await server.json({ loggedIn: true });
-      return server.json({ response: "Success, you are now logged in" }, 200);
+      // return server.json({ response: "Success, you are now logged in" }, 200);
     } else {
       await server.json({ loggedIn: false });
-      return server.json(
-        { error: "Incorrect password, please try again!" },
-        400
-      );
+      // return server.json(
+      //   { error: "Incorrect password, please try again!" },
+      //   400
+      // );
     }
   } else {
     await server.json({ loggedIn: false });
-    return server.json(
-      {
-        err: "An account with that username does not exist, please sign up",
-      },
-      400
-    );
+    // return server.json(
+    //   {
+    //     err: "An account with that username does not exist, please sign up",
+    //   },
+    //   400
+    // );
   }
 }
 
@@ -133,26 +133,26 @@ async function registerNewUser(server) {
           encryptedPassword
         );
         await server.json({ accountCreated: true });
-        return server.json({ response: "New account created!" }, 200);
+        // return server.json({ response: "New account created!" }, 200);
       } catch (err) {
         await server.json({ accountCreated: false });
-        return server.json(
-          {
-            err: "An account already exists for this username",
-          },
-          400
-        );
+        // return server.json(
+        //   {
+        //     err: "An account already exists for this username",
+        //   },
+        //   400
+        // );
       }
     } else {
       await server.json({ accountCreated: false });
-      return server.json(
-        { error: "Passwords do not match, please try again" },
-        400
-      );
+      // return server.json(
+      //   { error: "Passwords do not match, please try again" },
+      //   400
+      // );
     }
   } else {
     await server.json({ accountCreated: false });
-    server.json({ error: "Please provide all data" }, 400);
+    // server.json({ error: "Please provide all data" }, 400);
   }
 }
 
