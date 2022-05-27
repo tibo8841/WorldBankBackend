@@ -3,6 +3,7 @@ import { Client } from "https://deno.land/x/postgres@v0.11.3/mod.ts";
 import { abcCors } from "https://deno.land/x/cors/mod.ts";
 import * as bcrypt from "https://deno.land/x/bcrypt@v0.2.4/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
+import { v4 } from "https://deno.land/std/uuid/mod.ts";
 
 const DENO_ENV = Deno.env.get("DENO_ENV") ?? "development";
 config({ path: `./.env.${DENO_ENV}`, export: true });
@@ -34,9 +35,11 @@ app
   .get("/", async (server) => {
     await displayTest(server);
   })
-  .get("/login", async (server) => {
+  .get("/login:username:password", async (server) => {
     await getUserLogin(server);
-    // await createSession(server);
+  })
+  .post("/sessions", async (server) => {
+    await createSession(server);
   })
   .post("/register", async (server) => {
     await registerNewUser(server);
@@ -68,7 +71,7 @@ async function displayTest(server) {
 }
 
 export async function getUserLogin(server) {
-  const { username, password } = await server.body;
+  const { username, password } = await server.params;
 
   const query = await clientUser.queryObject(
     `SELECT * FROM users WHERE username = $1;`,
@@ -105,6 +108,15 @@ export async function getUserLogin(server) {
       400
     );
   }
+}
+
+async function createSession(server) {
+  const sessionId = v4.generate();
+  await clientUser.queryObject(
+    "INSERT INTO sessions (uuid, user_id, created_at) VALUES (?, ?, datetime('now'))",
+    sessionId,
+    user.id
+  );
 }
 
 async function registerNewUser(server) {
